@@ -63,3 +63,46 @@
   *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
   */
  
+
+function showCard(card) {
+    // Why does clicking on a card again make the before pseudoelemt disappear?
+    // Something to do with the show class font-size? 
+
+    console.log("Your card is: " + card)
+    card.className = 'card open show';
+    matchedCards(card);
+}
+
+let cardMatches = [];
+function matchedCards(card) {
+
+    symbol = card.firstChild.className;
+    cardMatches.push(symbol);
+    if (cardMatches.length > 1) {
+        // Ugly hack to get comparison working
+        symbolText0 = cardMatches[0];
+        symboltext1 = cardMatches[1];
+        
+        if (symbolText0 === symboltext1) {
+            // Great - lock open
+            console.log(symbol);
+            console.log(cardMatches);
+            console.log("It's a match!");
+            let matches = document.getElementsByClassName(symbol);
+            console.log(matches);
+            // matches.forEach(element => {
+            //     element.ParentElement.className += ' locked'
+            // });
+
+        } else {
+            // Reset cards
+            // cardMatches = [];
+        }
+    }
+}
+  
+const htmlDeck = document.querySelector('.deck')
+    htmlDeck.addEventListener('click', function(event) {
+    showCard(event.target);
+});
+

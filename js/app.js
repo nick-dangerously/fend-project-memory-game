@@ -65,10 +65,8 @@
  
 
 function showCard(card) {
-    // Why does clicking on a card again make the before pseudoelemt disappear?
-    // Something to do with the show class font-size? 
 
-    console.log("Your card is: " + card)
+    // console.log(card);
     card.className = 'card open show';
     matchedCards(card);
 }
@@ -79,7 +77,7 @@ function matchedCards(card) {
     symbol = card.firstChild.className;
     cardMatches.push(symbol);
     if (cardMatches.length > 1) {
-        // Ugly hack to get comparison working
+        // To force the equality operator to work
         symbolText0 = cardMatches[0];
         symboltext1 = cardMatches[1];
         
@@ -88,21 +86,46 @@ function matchedCards(card) {
             console.log(symbol);
             console.log(cardMatches);
             console.log("It's a match!");
-            let matches = document.getElementsByClassName(symbol);
-            console.log(matches);
+            
+            // let matches = document.getElementsByClassName(symbol);
             // matches.forEach(element => {
-            //     element.ParentElement.className += ' locked'
+            //     element.ParentElement.className += ' `locked';
             // });
+
+            // Can't use .foreach method on HTMLcollecton returned by getElementsByClassName
+            // for (let element of matches) {
+            //     element.ParentElement.className += ' `locked';
+            //     // However HTMLCollections can't seem to access their parents.
+            // }
+
+            let matches = document.querySelectorAll("." + symbol);
+            matches.forEach(element => {
+                element.ParentElement.className += ' `locked';
+            });
 
         } else {
             // Reset cards
-            // cardMatches = [];
+            window.alert();
+            cardMatches = [];
+            resetCardList = document.querySelectorAll('.card');
+            resetCardList.forEach(element => {
+                if (element.className.includes('locked')) {
+                    console.log('boop');
+                } else {
+                    element.className = 'card';
+                }
+            })
         }
     }
 }
   
 const htmlDeck = document.querySelector('.deck')
     htmlDeck.addEventListener('click', function(event) {
-    showCard(event.target);
+    // console.log(event.target.nodeName)
+    // Only run if the card and not the font awesome <i> is clicked 
+    if (event.target.nodeName === 'LI') {
+        showCard(event.target);
+    }
+    
 });
 

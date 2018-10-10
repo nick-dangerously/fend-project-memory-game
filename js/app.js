@@ -71,8 +71,17 @@ function showCard(card) {
     matchedCards(card);
 }
 
-async function resetCards() {
-    
+function resetCards() {
+    // Reset cards
+    cardMatches = [];
+    resetCardList = document.querySelectorAll('.card');
+    resetCardList.forEach(element => {
+        if (element.className.includes('locked')) {
+            console.log('boop');
+        } else {
+            element.className = 'card';
+        }
+    })
 }
 
 let cardMatches = [];
@@ -130,18 +139,7 @@ function matchedCards(card) {
         cardMatches = [];
 
         } else {
-            
-
-            // Reset cards
-            cardMatches = [];
-            resetCardList = document.querySelectorAll('.card');
-            resetCardList.forEach(element => {
-                if (element.className.includes('locked')) {
-                    console.log('boop');
-                } else {
-                    element.className = 'card';
-                }
-            })
+            setTimeout(function(){ resetCards(); }, 1000);
         }
     }
 }

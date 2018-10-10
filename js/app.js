@@ -71,15 +71,20 @@ function showCard(card) {
     matchedCards(card);
 }
 
+async function resetCards() {
+    
+}
+
 let cardMatches = [];
 function matchedCards(card) {
 
     symbol = card.firstChild.className;
     cardMatches.push(symbol);
+    console.log(cardMatches);
     if (cardMatches.length > 1) {
         // To force the equality operator to work
-        symbolText0 = cardMatches[0];
-        symboltext1 = cardMatches[1];
+        let symbolText0 = cardMatches[0];
+        let symboltext1 = cardMatches[1];
         
         if (symbolText0 === symboltext1) {
             // Great - lock open
@@ -98,14 +103,36 @@ function matchedCards(card) {
             //     // However HTMLCollections can't seem to access their parents.
             // }
 
-            let matches = document.querySelectorAll("." + symbol);
-            matches.forEach(element => {
-                element.ParentElement.className += ' `locked';
-            });
+            FASymbol = symbol.split(" ")[1];
+            matches = document.querySelectorAll("." + FASymbol);
+            console.log(matches);
+            // matches.forEach(element => {
+            //     console.log("The element is: " + element);
+            //     console.log("The parent element is: " + element.ParentElement);
+            //     element.ParentElement.className += ' locked';
+            // });
+
+            // // Doesn't get the parent element
+            // matches.forEach(function(currentValue) {
+            //     console.log("The element is: " + currentValue);
+            //     console.log("The parent element is: " + currentValue.ParentElement);
+            // })
+
+            // Adds the locked class to the card element
+            let match1 = matches[0];
+            let match2 = matches[1];
+            console.log("The element is: " + match1);
+            console.log("The parent element is: " + match1.parentElement);
+            match1.parentElement.className += ' locked';
+            match2.parentElement.className += ' locked';
+
+            
+        cardMatches = [];
 
         } else {
+            
+
             // Reset cards
-            window.alert();
             cardMatches = [];
             resetCardList = document.querySelectorAll('.card');
             resetCardList.forEach(element => {

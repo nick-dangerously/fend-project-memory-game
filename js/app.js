@@ -65,15 +65,11 @@
  
 
 function showCard(card) {
-
-    // console.log(card);
-    
     // Make sure the card is not already open
     if (!(card.className.includes('open'))) {
         card.className = 'card open show';
         matchedCards(card);    
     } 
-
 }
 
 function resetCards() {
@@ -86,6 +82,18 @@ function resetCards() {
         } else {
             element.className = 'card';
         }
+    })
+}
+
+function resetGame() {
+    let CardList = document.querySelectorAll('.card');
+    CardList.forEach (element => {
+    //    console.log(element);
+        element.remove();
+    })
+    shuffled_deck = shuffle(deck);
+    shuffled_deck.forEach(element => {
+        makeCard(element);
     })
 }
 
@@ -150,12 +158,16 @@ function matchedCards(card) {
 }
   
 const htmlDeck = document.querySelector('.deck')
-    htmlDeck.addEventListener('click', function(event) {
+htmlDeck.addEventListener('click', function(event) {
     // console.log(event.target.nodeName)
     // Only run if the card and not the font awesome <i> is clicked 
     if (event.target.nodeName === 'LI') {
         showCard(event.target);
     }
-    
 });
 
+const resetButton = document.querySelector('.restart')
+// resetButton.addEventListener('click', resetGame());
+resetButton.addEventListener('click', function() {
+    resetGame();
+});

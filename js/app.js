@@ -67,8 +67,13 @@
 function showCard(card) {
 
     // console.log(card);
-    card.className = 'card open show';
-    matchedCards(card);
+    
+    // Make sure the card is not already open
+    if (!(card.className.includes('open'))) {
+        card.className = 'card open show';
+        matchedCards(card);    
+    } 
+
 }
 
 function resetCards() {
@@ -94,7 +99,7 @@ function matchedCards(card) {
         // To force the equality operator to work
         let symbolText0 = cardMatches[0];
         let symboltext1 = cardMatches[1];
-        
+
         if (symbolText0 === symboltext1) {
             // Great - lock open
             console.log(symbol);
